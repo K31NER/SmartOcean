@@ -1,3 +1,5 @@
+from typing import Optional
+from datetime import datetime
 from sqlmodel import SQLModel,Field
 
 class Reporte(SQLModel,table=True):
@@ -5,8 +7,9 @@ class Reporte(SQLModel,table=True):
     lugar:str = Field(index=True)
     tipo:str = Field()
     descripcion:str = Field()
-    nombre:str = Field()
-    contacto:str = Field()
+    nombre: Optional[str] = Field(default=None,nullable=True)
+    contacto:Optional[str] = Field(default=None,nullable=True)
+    fecha_creacion: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
-        orm_mode = True
+        from_attributes = True

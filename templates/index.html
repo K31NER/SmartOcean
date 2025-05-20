@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Playas - Cartagena de Indias</title>
+    <title>Smart Ocean</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/static/img/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .beach-card:hover {
@@ -63,7 +64,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Bocagrande -->
                 <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
-                    <div class="h-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1561501900-3701fa6e0864?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                    <div class="h-40 bg-cover bg-center" style="background-image: url('');">
                         <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
                             <h3 class="text-white text-xl font-bold">Bocagrande</h3>
                         </div>
@@ -235,39 +236,8 @@
         <!-- Real-time Alerts -->
         <section class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Alertas Recientes</h2>
-            <div class="space-y-4">
-                <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-r">
-                    <div class="flex justify-between">
-                        <h3 class="font-semibold text-red-800">Rescate acuático en Bocagrande</h3>
-                        <span class="text-xs text-gray-500">Hace 15 min</span>
-                    </div>
-                    <p class="text-sm text-gray-700 mt-1">Turista en dificultades, rescatado por salvavidas. Se recomienda precaución en zona norte.</p>
-                    <div class="mt-2 flex items-center text-xs text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-1"></i> Bocagrande - Sector norte
-                    </div>
-                </div>
-
-                <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4 rounded-r">
-                    <div class="flex justify-between">
-                        <h3 class="font-semibold text-yellow-800">Objeto sospechoso en Playa Blanca</h3>
-                        <span class="text-xs text-gray-500">Hace 2 horas</span>
-                    </div>
-                    <p class="text-sm text-gray-700 mt-1">Paquete abandonado, autoridades en camino. Por favor evacuar área cercana.</p>
-                    <div class="mt-2 flex items-center text-xs text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-1"></i> Playa Blanca - Cerca de restaurantes
-                    </div>
-                </div>
-
-                <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r">
-                    <div class="flex justify-between">
-                        <h3 class="font-semibold text-blue-800">Marea alta en La Boquilla</h3>
-                        <span class="text-xs text-gray-500">Hoy, 8:30 AM</span>
-                    </div>
-                    <p class="text-sm text-gray-700 mt-1">Advertencia por marea alta en las próximas horas. Precaución al nadar.</p>
-                    <div class="mt-2 flex items-center text-xs text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-1"></i> La Boquilla - Zona central
-                    </div>
-                </div>
+            <div id="alertas-container" class="space-y-4">
+                <!-- Aquí se insertarán las alertas dinámicamente -->
             </div>
         </section>
     </main>
@@ -332,46 +302,130 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('alertForm').addEventListener('submit') 
-    // Eliminar o comentar la siguiente línea para permitir el envío del formulario
-    // e.preventDefault();
+<script>
+    // =============================
+    // Manejo del formulario de alerta con fetch
+    // =============================
+    document.getElementById('alertForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita el envío tradicional del formulario
 
-    // Aquí normalmente enviarías los datos del formulario a un servidor
-    // Para este ejemplo, solo mostraremos un mensaje de éxito
-    document.getElementById('successModal').classList.remove('hidden');
+        const formData = new FormData(this); // Capturamos datos del formulario
 
-    // Reiniciar formulario
-    this.reset();
-
-function closeModal() {
-    document.getElementById('successModal').classList.add('hidden');
-}
-
-// Simular actualizaciones en tiempo real (solo para demo)
-setInterval(function() {
-    const statusIndicators = document.querySelectorAll('.status-indicator');
-    statusIndicators.forEach(indicator => {
-        // Cambiar aleatoriamente el estado para fines de demostración (10% de probabilidad)
-        if (Math.random() < 0.1) {
-            indicator.classList.remove('status-safe', 'status-warning', 'status-danger');
-            const statuses = ['status-safe', 'status-warning', 'status-danger'];
-            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-            indicator.classList.add(randomStatus);
-
-            // Actualizar el texto junto a él
-            const statusText = indicator.nextElementSibling;
-            if (randomStatus === 'status-safe') {
-                statusText.textContent = 'Condición: Segura';
-            } else if (randomStatus === 'status-warning') {
-                statusText.textContent = 'Condición: Precaución';
+        fetch('/report', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected || response.ok) {
+                // Mostrar modal de éxito
+                document.getElementById('successModal').classList.remove('hidden');
+                // Reset del formulario
+                document.getElementById('alertForm').reset();
+                // Recargar alertas dinámicamente
+                cargarAlertas();
             } else {
-                statusText.textContent = 'Condición: Peligro';
+                throw new Error("El servidor no pudo procesar el reporte.");
             }
-        }
+        })
+        .catch(error => {
+            console.error("Error al enviar el formulario:", error);
+            alert("Hubo un error al enviar el reporte. Intente nuevamente.");
+        });
     });
-}, 5000);
 
-    </script>
+    // =============================
+    // Cierre del modal
+    // =============================
+    function closeModal() {
+        document.getElementById('successModal').classList.add('hidden');
+    }
+
+    // =============================
+    // Simulación de estado dinámico (demo)
+    // =============================
+    setInterval(function() {
+        const statusIndicators = document.querySelectorAll('.status-indicator');
+        statusIndicators.forEach(indicator => {
+            if (Math.random() < 0.1) {
+                indicator.classList.remove('status-safe', 'status-warning', 'status-danger');
+                const statuses = ['status-safe', 'status-warning', 'status-danger'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                indicator.classList.add(randomStatus);
+
+                const statusText = indicator.nextElementSibling;
+                if (randomStatus === 'status-safe') {
+                    statusText.textContent = 'Condición: Segura';
+                } else if (randomStatus === 'status-warning') {
+                    statusText.textContent = 'Condición: Precaución';
+                } else {
+                    statusText.textContent = 'Condición: Peligro';
+                }
+            }
+        });
+    }, 5000);
+
+    // =============================
+    // Render dinámico de alertas desde /listar_informes
+    // =============================
+    const tipoEstilos = {
+        "Contaminación": {
+            border: "border-yellow-500",
+            bg: "bg-yellow-50",
+            text: "text-yellow-800"
+        },
+        "Emergencia": {
+            border: "border-red-500",
+            bg: "bg-red-50",
+            text: "text-red-800"
+        },
+        "Advertencia": {
+            border: "border-blue-500",
+            bg: "bg-blue-50",
+            text: "text-blue-800"
+        }
+    };
+
+    function formatearLugar(lugar) {
+        return lugar
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    function cargarAlertas() {
+        fetch('/listar_informes')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('alertas-container');
+                container.innerHTML = ''; // Limpiar contenido anterior
+
+                data.forEach(reporte => {
+                    const estilos = tipoEstilos[reporte.tipo] || tipoEstilos["Advertencia"];
+                    const div = document.createElement('div');
+                    div.className = `border-l-4 ${estilos.border} ${estilos.bg} p-4 rounded-r`;
+
+                    div.innerHTML = `
+                        <div class="flex justify-between">
+                            <h3 class="font-semibold ${estilos.text}">${reporte.tipo} en ${formatearLugar(reporte.lugar)}</h3>
+                            <span class="text-xs text-gray-500">${reporte.fecha_creacion}</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">${reporte.descripcion}</p>
+                        <div class="mt-2 flex items-center text-xs text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-1"></i> ${formatearLugar(reporte.lugar)}
+                        </div>
+                    `;
+
+                    container.appendChild(div);
+                });
+            })
+            .catch(error => {
+                console.error("Error cargando alertas:", error);
+            });
+    }
+
+    // Ejecutar carga inicial de alertas
+    document.addEventListener('DOMContentLoaded', cargarAlertas);
+</script>
+
+
 </body>
 </html>
