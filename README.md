@@ -38,7 +38,7 @@
 ## 🧱 Tech Stack
 
 - ⚙️ **Backend**: [FastAPI](https://fastapi.tiangolo.com/)
-- 🗃️ **Base de datos**: PostgreSQL
+- 🗃️ **Base de datos**: [Neon](https://console.neon.tech/app/projects)
 - ☁️ **Deploy**: [Render](https://render.com/)
 
 
