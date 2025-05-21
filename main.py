@@ -6,7 +6,8 @@ from router import reporte,render
 
 app = FastAPI(
     title="Reporte de playas",
-    lifespan=create_tables
+    lifespan=create_tables,
+    docs_url=None, redoc_url=None
 )
 
 templates = Jinja2Templates("templates")
