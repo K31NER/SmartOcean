@@ -1,10 +1,14 @@
 from sqlmodel import create_engine,SQLModel,Session
 from fastapi import Depends,FastAPI
+from dotenv import load_dotenv
 from typing import Annotated
+import os
 
-URL = "sqlite:///./report.db"
+load_dotenv()
 
-engine = create_engine(URL, connect_args={"check_same_thread":False})
+URL = os.getenv("DB_URL")
+
+engine = create_engine(URL, echo=True)
 
 def get_session():
     """ Crear conexion con la base de datos """
