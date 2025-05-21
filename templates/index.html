@@ -7,14 +7,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="/static/img/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
+        /* Prevenir scroll horizontal en la página principal */
+        body {
+            overflow-x: hidden;
+        }
+
+        .beach-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
         .beach-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .wave-animation {
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Mantenemos overflow hidden para el efecto de ola */
         }
         .wave-animation::before {
             content: "";
@@ -40,13 +50,146 @@
         .status-safe { background-color: #10B981; }
         .status-warning { background-color: #F59E0B; }
         .status-danger { background-color: #EF4444; }
+
+        /* Swiper custom styles */
+        .beach-slider { /* This is the main swiper-container */
+            width: 100%; 
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 20px;
+            padding-bottom: 60px; 
+            position: relative; 
+            overflow: hidden; /* Importante: Contiene el scroll del Swiper dentro de sí mismo */
+            --swiper-pagination-color: #2563EB; 
+            --swiper-navigation-color: #FFFFFF; 
+            --swiper-navigation-size: 22px; 
+        }
+
+        /* Estilos para el contenedor de alertas recientes */
+        #alertas-container {
+            max-height: 22rem; /* Ajusta este valor. Aprox. para 3-4 alertas. */
+                            /* 1rem = 16px. 22rem = 352px. */
+            overflow-y: auto;  /* Muestra scrollbar vertical si el contenido excede max-height */
+            /* Opcional: espacio para la scrollbar si no es flotante */
+            padding-right: 0.5rem; /* Ajusta si la scrollbar oculta contenido */
+                                /* O puedes usar 'scrollbar-gutter: stable;' si los navegadores lo soportan bien */
+        }
+        /* Estilo opcional para la scrollbar (WebKit browsers como Chrome, Safari, Edge) */
+        #alertas-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #alertas-container::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Color de fondo de la pista */
+            border-radius: 10px;
+        }
+        #alertas-container::-webkit-scrollbar-thumb {
+            background: #c5c5c5; /* Color del pulgar de la scrollbar */
+            border-radius: 10px;
+        }
+        #alertas-container::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3; /* Color del pulgar al pasar el mouse */
+        }
+
+        .swiper-wrapper {
+            /* Swiper maneja esto internamente */
+        }
+
+        .swiper-slide {
+            width: 85%; 
+            max-width: 360px; 
+            height: auto; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent; 
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0.7; 
+            transform: scale(0.9); 
+        }
+
+        .swiper-slide-active {
+            opacity: 1;
+            transform: scale(1); 
+        }
+        
+        @media (min-width: 640px) { /* sm */
+            .swiper-slide {
+                width: 70%;
+                max-width: 380px;
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .swiper-slide {
+                width: 60%; 
+                max-width: 400px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .swiper-slide {
+                width: 45%; 
+                max-width: 420px;
+            }
+        }
+         @media (min-width: 1280px) { /* xl */
+            .swiper-slide {
+                width: 35%; 
+                max-width: 420px; 
+            }
+        }
+
+        .beach-slider .swiper-slide .beach-card {
+            width: 100%; 
+            margin: 0 auto;
+        }
+
+        /* Navigation Arrows Styling */
+        .swiper-button-next,
+        .swiper-button-prev {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%); 
+            width: 44px; 
+            height: 44px;
+            background-color: rgba(30, 41, 59, 0.5); 
+            border-radius: 50%;
+            color: var(--swiper-navigation-color); 
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; 
+            transition: opacity 0.3s ease, background-color 0.3s ease;
+            z-index: 10; 
+        }
+        .beach-slider:hover .swiper-button-next,
+        .beach-slider:hover .swiper-button-prev {
+            opacity: 1; 
+        }
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+        .swiper-button-prev { left: 15px; } 
+        .swiper-button-next { right: 15px; }
+        
+        /* Pagination Bullets */
+        .swiper-pagination-bullet {
+            background-color: #9CA3AF; 
+            opacity: 0.8;
+            width: 10px;
+            height: 10px;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: var(--swiper-pagination-color); 
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50"> 
     <!-- Header -->
     <header class="wave-animation bg-blue-600 text-white py-12">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-2">Sistema Inteligente de Playas</h1>
+            <h1 class="text-4xl font-bold mb-2">SmartOcean - Sistema Inteligente de Playas</h1>
             <p class="text-xl">Cartagena de Indias, Colombia</p>
             <div class="mt-6">
                 <span class="inline-block bg-white text-blue-600 px-4 py-2 rounded-full font-semibold">
@@ -56,376 +199,677 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- Beach Status Overview -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Estado de las Playas</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Bocagrande -->
-                <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
-                    <div class="h-40 bg-cover bg-center" style="background-image: url('');">
-                        <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
-                            <h3 class="text-white text-xl font-bold">Bocagrande</h3>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-sm font-semibold text-gray-600">
-                                <span class="status-indicator status-safe"></span> Condición: Segura
-                            </span>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <div>
-                                <i class="fas fa-users text-blue-500 mr-1"></i>
-                                <span class="text-gray-600">Afluencia: Media</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i>
-                                <span class="text-gray-600">Oleaje: Moderado</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-temperature-high text-red-500 mr-1"></i>
-                                <span class="text-gray-600">Temperatura: 30°C</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-wind text-gray-500 mr-1"></i>
-                                <span class="text-gray-600">Viento: 12 km/h</span>
+<main class="container mx-auto px-4 py-8">
+    <!-- Beach Status Overview with Swiper -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Estado de las Playas</h2>
+        <div class="swiper-container beach-slider"> 
+            <div class="swiper-wrapper">
+                <!-- Slide 1: Bocagrande -->
+                <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://media.istockphoto.com/id/1396442052/es/foto/skyline-of-cartagena-de-indias-colombia-distrito-de-bocagrande.jpg?s=612x612&w=0&k=20&c=vTPCIfJ2VVCRlt2mMqUsrgyJwtQ_cV47xOZggM_zGME=');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Bocagrande</h3>
                             </div>
                         </div>
-                        <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors">
-                            <i class="fas fa-info-circle mr-2"></i>Ver detalles
-                        </button>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
+                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Moderado</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 30°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 12 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Bocagrande"
+                                data-beach-image="https://media.istockphoto.com/id/1396442052/es/foto/skyline-of-cartagena-de-indias-colombia-distrito-de-bocagrande.jpg?s=612x612&w=0&k=20&c=vTPCIfJ2VVCRlt2mMqUsrgyJwtQ_cV47xOZggM_zGME="
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Media<br>Oleaje: Moderado<br>Temperatura: 30°C<br>Viento: 12 km/h<br>Calidad del agua: Buena<br>Presencia de medusas: Baja">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Playa Blanca -->
-                <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
-                    <div class="h-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                        <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
-                            <h3 class="text-white text-xl font-bold">Playa Blanca</h3>
+                <!-- Slide 2: Playa Blanca (Isla Barú) -->
+                <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://media.istockphoto.com/id/478557313/es/foto/agua-turquesa-del-caribe.jpg?s=612x612&w=0&k=20&c=Lj2VOTlqoXFOfPgRfKz2PKP2vYfacbus30jPbcQB9Zs=');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Playa Blanca (Isla Barú)</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-warning"></span> Condición: Precaución
+                                </span>
+                                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Alta</span></div>
+                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Fuerte</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 32°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 18 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Playa Blanca (Isla Barú)"
+                                data-beach-image="https://media.istockphoto.com/id/478557313/es/foto/agua-turquesa-del-caribe.jpg?s=612x612&w=0&k=20&c=Lj2VOTlqoXFOfPgRfKz2PKP2vYfacbus30jPbcQB9Zs="
+                                data-beach-status="Precaución"
+                                data-beach-status-class="status-warning"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-yellow-100"
+                                data-beach-open-status-text="text-yellow-800"
+                                data-beach-details="Afluencia: Alta<br>Oleaje: Fuerte<br>Temperatura: 32°C<br>Viento: 18 km/h<br>Recomendaciones: Cuidado con corrientes, no nadar lejos de la orilla.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-sm font-semibold text-gray-600">
-                                <span class="status-indicator status-warning"></span> Condición: Precaución
-                            </span>
-                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Abierta</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <div>
-                                <i class="fas fa-users text-blue-500 mr-1"></i>
-                                <span class="text-gray-600">Afluencia: Alta</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i>
-                                <span class="text-gray-600">Oleaje: Fuerte</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-temperature-high text-red-500 mr-1"></i>
-                                <span class="text-gray-600">Temperatura: 32°C</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-wind text-gray-500 mr-1"></i>
-                                <span class="text-gray-600">Viento: 18 km/h</span>
+                </div>
+                
+                <!-- Slide 3: La Boquilla -->
+                <div class="swiper-slide">
+                     <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://lh5.googleusercontent.com/zvvS8bMoBvqePbNVTdYzVxaboF1asoxCtXR0fT-34KOk0KYooGvRfnSBBqd_r4xvmOt2yiTtvyi8liYfVDsXvKE=w16383');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">La Boquilla</h3>
                             </div>
                         </div>
-                        <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors">
-                            <i class="fas fa-info-circle mr-2"></i>Ver detalles
-                        </button>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Baja</span></div>
+                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Suave</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 29°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 8 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="La Boquilla"
+                                data-beach-image="https://lh5.googleusercontent.com/zvvS8bMoBvqePbNVTdYzVxaboF1asoxCtXR0fT-34KOk0KYooGvRfnSBBqd_r4xvmOt2yiTtvyi8liYfVDsXvKE=w16383"
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Baja<br>Oleaje: Suave<br>Temperatura: 29°C<br>Viento: 8 km/h<br>Ideal para familias y deportes acuáticos tranquilos.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- La Boquilla -->
-                <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
-                    <div class="h-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1561501878-aabd62634533?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                        <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
-                            <h3 class="text-white text-xl font-bold">La Boquilla</h3>
+                <!-- Slide 4: Marbella -->
+                <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://cartagenadeindias.travel/wp-content/uploads/2022/11/marbella-2.webp');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Marbella</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
+                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Moderado</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 30°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 10 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Marbella"
+                                data-beach-image="https://cartagenadeindias.travel/wp-content/uploads/2022/11/marbella-2.webp"
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Media<br>Oleaje: Moderado<br>Temperatura: 30°C<br>Viento: 10 km/h<br>Playa urbana con fácil acceso.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-sm font-semibold text-gray-600">
-                                <span class="status-indicator status-safe"></span> Condición: Segura
-                            </span>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <div>
-                                <i class="fas fa-users text-blue-500 mr-1"></i>
-                                <span class="text-gray-600">Afluencia: Baja</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i>
-                                <span class="text-gray-600">Oleaje: Suave</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-temperature-high text-red-500 mr-1"></i>
-                                <span class="text-gray-600">Temperatura: 29°C</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-wind text-gray-500 mr-1"></i>
-                                <span class="text-gray-600">Viento: 8 km/h</span>
+                </div>
+
+                <!-- Slide 5: Cholón (Barú) -->
+                <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://i0.wp.com/globalexperiencestours.com/wp-content/uploads/2021/09/como-llegar-a-cholon-cartagena-de-indias.png?fit=600%2C454&ssl=1');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Cholón (Barú)</h3>
                             </div>
                         </div>
-                        <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors">
-                            <i class="fas fa-info-circle mr-2"></i>Ver detalles
-                        </button>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-warning"></span> Condición: Precaución
+                                </span>
+                                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Restringida</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Alta</span></div>
+                                <div><i class="fas fa-ship text-purple-500 mr-1"></i><span class="text-gray-600">Botes: Muchos</span></div>
+                                <div><i class="fas fa-music text-pink-500 mr-1"></i><span class="text-gray-600">Fiesta: Común</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 15 km/h</span></div>
+                            </div>
+                           <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Cholón (Barú)"
+                                data-beach-image="https://i0.wp.com/globalexperiencestours.com/wp-content/uploads/2021/09/como-llegar-a-cholon-cartagena-de-indias.png?fit=600%2C454&ssl=1"
+                                data-beach-status="Precaución"
+                                data-beach-status-class="status-warning"
+                                data-beach-open-status="Restringida"
+                                data-beach-open-status-bg="bg-yellow-100"
+                                data-beach-open-status-text="text-yellow-800"
+                                data-beach-details="Afluencia: Alta<br>Botes: Muchos<br>Fiesta: Común<br>Viento: 15 km/h<br>Popular por fiestas en botes, precaución con el tráfico marítimo.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Slide 6: Manzanillo del Mar -->
+                <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://genesishotel.co/images/manzanillo-del-mar-cartagena-morros-zoe.jpg');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Manzanillo del Mar</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Baja</span></div>
+                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Suave</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 28°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 7 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Manzanillo del Mar"
+                                data-beach-image="https://genesishotel.co/images/manzanillo-del-mar-cartagena-morros-zoe.jpg"
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Baja<br>Oleaje: Suave<br>Temperatura: 28°C<br>Viento: 7 km/h<br>Playa extensa y tranquila, ideal para relajarse.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 7: Playa Azul -->
+                 <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://aldianews.com/sites/default/files/2022-03/foto%20grande%20AL%20DIA%20%284%29.png');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Playa Azul</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Bandera Azul</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
+                                <div><i class="fas fa-swimmer text-cyan-500 mr-1"></i><span class="text-gray-600">Agua: Clara</span></div>
+                                <div><i class="fas fa-award text-blue-700 mr-1"></i><span class="text-gray-600">Calidad: Alta</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 9 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Playa Azul"
+                                data-beach-image="https://aldianews.com/sites/default/files/2022-03/foto%20grande%20AL%20DIA%20%284%29.png"
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Bandera Azul"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Media<br>Agua: Clara<br>Calidad: Alta (Certificación Bandera Azul)<br>Viento: 9 km/h<br>Excelente calidad ambiental y servicios.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 8: Laguito -->
+                 <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://live.staticflickr.com/6020/5981924550_36b5cb830c_b.jpg');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Laguito</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-danger"></span> Condición: Peligro
+                                </span>
+                                <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Cerrada Temporal</span>
+                            </div>
+                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: N/A</span></div>
+                                <div><i class="fas fa-exclamation-triangle text-red-500 mr-1"></i><span class="text-gray-600">Alerta: Erosión</span></div>
+                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 31°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 13 km/h</span></div>
+                            </div>
+                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Laguito"
+                                data-beach-image="https://live.staticflickr.com/6020/5981924550_36b5cb830c_b.jpg"
+                                data-beach-status="Peligro"
+                                data-beach-status-class="status-danger"
+                                data-beach-open-status="Cerrada Temporal"
+                                data-beach-open-status-bg="bg-red-100"
+                                data-beach-open-status-text="text-red-800"
+                                data-beach-details="Afluencia: N/A (Cerrada)<br>Alerta: Problemas de erosión costera.<br>Temperatura: 31°C<br>Viento: 13 km/h<br>Actualmente cerrada por trabajos de mitigación.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 9: Castillogrande -->
+                 <div class="swiper-slide">
+                    <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://www.cartagenainmuebles.com/imagenes/sectores/castillogrande.jpg');">
+                            <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
+                                <h3 class="text-white text-xl font-bold">Castillogrande</h3>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-semibold text-gray-600">
+                                    <span class="status-indicator status-safe"></span> Condición: Segura
+                                </span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
+                                <div><i class="fas fa-water text-teal-500 mr-1"></i><span class="text-gray-600">Agua: Calma</span></div>
+                                <div><i class="fas fa-walking text-green-500 mr-1"></i><span class="text-gray-600">Ideal para: Caminar</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 10 km/h</span></div>
+                            </div>
+                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
+                                data-beach-name="Castillogrande"
+                                data-beach-image="https://www.cartagenainmuebles.com/imagenes/sectores/castillogrande.jpg"
+                                data-beach-status="Segura"
+                                data-beach-status-class="status-safe"
+                                data-beach-open-status="Abierta"
+                                data-beach-open-status-bg="bg-green-100"
+                                data-beach-open-status-text="text-green-800"
+                                data-beach-details="Afluencia: Media<br>Agua: Calma<br>Ideal para: Caminar, deportes náuticos suaves.<br>Viento: 10 km/h<br>Playa residencial tranquila con vistas a la bahía.">
+                                <i class="fas fa-info-circle mr-2"></i>Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            
+            <!-- Add Navigation Arrows -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </section>
+
+    <!-- Alert Form -->
+    <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Reportar Emergencia o Novedad</h2>
+        <form id="alertForm" class="space-y-4" action="/report" method="POST">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="lugar" class="block text-sm font-medium text-gray-700 mb-1">Playa afectada *</label>
+                    <select id="lugar" name="lugar" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Seleccione una playa</option>
+                        <option value="bocagrande">Bocagrande</option>
+                        <option value="playa_blanca_baru">Playa Blanca (Isla Barú)</option>
+                        <option value="la_boquilla">La Boquilla</option>
+                        <option value="marbella">Marbella</option>
+                        <option value="cholon_baru">Cholón (Barú)</option>
+                        <option value="manzanillo_del_mar">Manzanillo del Mar</option>
+                        <option value="playa_azul">Playa Azul</option>
+                        <option value="laguito">Laguito</option>
+                        <option value="castillogrande">Castillogrande</option>
+                        <option value="otra">Otra (especificar en descripción)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="tipo" class="block text-sm font-medium text-gray-700 mb-1">Tipo de reporte *</label>
+                    <select id="tipo" name="tipo" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Seleccione un tipo</option>
+                        <option value="Emergencia">Emergencia (Persona en peligro, accidente)</option>
+                        <option value="Incidente">Incidente (Robo, alteración orden)</option>
+                        <option value="Contaminación">Contaminación (Basura, vertidos)</option>
+                        <option value="Infraestructura">Infraestructura (Daño en mobiliario, señalización)</option>
+                        <option value="Otro">Otro (Detallar en descripción)</option>
+                    </select>
                 </div>
             </div>
-        </section>
 
-        <!-- Alert Form -->
-        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Reportar Emergencia o Novedad</h2>
-            <form id="alertForm" class="space-y-4" action="/report" method="POST">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="lugar" class="block text-sm font-medium text-gray-700 mb-1">Playa afectada *</label>
-                        <select id="lugar" name="lugar" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">Seleccione una playa</option>
-                            <option value="bocagrande">Bocagrande</option>
-                            <option value="playa_blanca">Playa Blanca</option>
-                            <option value="la_boquilla">La Boquilla</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="tipo" class="block text-sm font-medium text-gray-700 mb-1">Tipo de reporte *</label>
-                        <select id=tipo" name="tipo" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">Seleccione un tipo</option>
-                            <option value="Emergencia">Emergencia</option>
-                            <option value="Incidente">Incidente</option>
-                            <option value="Contaminación">Contaminación</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción detallada *</label>
-                    <textarea id="descripcion" name="descripcion" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Describa la situación con el mayor detalle posible..."></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre (opcional)</label>
-                        <input type="text" id="nombre" name="nombre" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="contacto" class="block text-sm font-medium text-gray-700 mb-1">Contacto (opcional)</label>
-                        <input type="text" id="contacto" name="contacto" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Teléfono o correo">
-                    </div>
-                </div>
-
-                <div class="flex items-center">
-                    <input id="anonymous" name="anonymous" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                    <label for="anonymous" class="ml-2 block text-sm text-gray-700">Reportar de forma anónima</label>
-                </div>
-
-                <div class="pt-4">
-                    <button type="submit" class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-md transition-colors flex items-center justify-center">
-                        <i class="fas fa-exclamation-triangle mr-2"></i> Enviar Alerta
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- Real-time Alerts -->
-        <section class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Alertas Recientes</h2>
-            <div id="alertas-container" class="space-y-4">
-                <!-- Aquí se insertarán las alertas dinámicamente -->
+            <div>
+                <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción detallada *</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Describa la situación con el mayor detalle posible..."></textarea>
             </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Sistema Inteligente de Playas</h3>
-                    <p class="text-gray-400">Monitoreo en tiempo real de las playas de Cartagena de Indias, Colombia.</p>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre (opcional)</label>
+                    <input type="text" id="nombre" name="nombre" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Contacto de Emergencias</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-phone-alt mr-2"></i> 123 - Emergencias</li>
-                        <li><i class="fas fa-life-ring mr-2"></i> 125 - Guardacostas</li>
-                        <li><i class="fas fa-hospital mr-2"></i> 132 - Ambulancias</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Redes Sociales</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-facebook-f text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-youtube text-xl"></i>
-                        </a>
-                    </div>
+                    <label for="contacto" class="block text-sm font-medium text-gray-700 mb-1">Contacto (opcional)</label>
+                    <input type="text" id="contacto" name="contacto" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Teléfono o correo">
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-                <p>© 2023 Sistema de Gestión de Playas de Cartagena. Todos los derechos reservados.</p>
+
+            <div class="flex items-center">
+                <input id="anonymous" name="anonymous" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <label for="anonymous" class="ml-2 block text-sm text-gray-700">Reportar de forma anónima (si se marca, no se enviará nombre ni contacto)</label>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-md transition-colors flex items-center justify-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> Enviar Alerta
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Real-time Alerts -->
+    <section class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Alertas Recientes</h2>
+        <div id="alertas-container" class="space-y-4">
+            <!-- Aquí se insertarán las alertas dinámicamente -->
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Sistema Inteligente de Playas</h3>
+                <p class="text-gray-400">Monitoreo en tiempo real de las playas de Cartagena de Indias, Colombia.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contacto de Emergencias</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><i class="fas fa-phone-alt mr-2"></i> 123 - Emergencias</li>
+                    <li><i class="fas fa-life-ring mr-2"></i> 125 - Guardacostas</li>
+                    <li><i class="fas fa-hospital mr-2"></i> 132 - Ambulancias</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Redes Sociales</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+            <p>© 2023 Sistema de Gestión de Playas de Cartagena. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
 
-    <!-- Modal for form submission -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                    <i class="fas fa-check text-green-600"></i>
-                </div>
-                <h3 class="text-lg font-medium text-gray-900 mt-3">¡Reporte enviado con éxito!</h3>
-                <div class="mt-2 text-sm text-gray-500">
-                    <p>Gracias por tu colaboración. Las autoridades han sido notificadas y tomarán las medidas necesarias.</p>
-                </div>
-                <div class="mt-4">
-                    <button onclick="closeModal()" type="button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
-                        Cerrar
-                    </button>
-                </div>
+<!-- Modal for form submission SUCCESS -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-auto">
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                <i class="fas fa-check text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mt-3">¡Reporte enviado con éxito!</h3>
+            <div class="mt-2 text-sm text-gray-500">
+                <p>Gracias por tu colaboración. Las autoridades han sido notificadas y tomarán las medidas necesarias.</p>
+            </div>
+            <div class="mt-4">
+                <button onclick="closeModal('successModal')" type="button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal for Beach Details -->
+<div id="beachDetailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+    <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-auto max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="modalBeachName" class="text-xl font-semibold text-gray-900">Detalles de la Playa</h3>
+            <button onclick="closeModal('beachDetailModal')" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <img id="modalBeachImage" src="" alt="Imagen de la playa" class="w-full h-48 object-cover rounded-md mb-4">
+        
+        <div class="mb-3">
+            <span class="text-sm font-semibold text-gray-600">
+                <span id="modalBeachStatusIndicator" class="status-indicator"></span> Condición: <span id="modalBeachStatusText"></span>
+            </span>
+            <span id="modalBeachOpenStatusBadge" class="text-xs px-2 py-1 rounded ml-2"></span>
+        </div>
+
+        <h4 class="text-md font-semibold text-gray-700 mb-1">Información Adicional:</h4>
+        <div id="modalBeachDetailsText" class="text-sm text-gray-600 space-y-1">
+            <!-- Detalles se insertarán aquí -->
+        </div>
+
+        <div class="mt-6 text-right">
+            <button onclick="closeModal('beachDetailModal')" type="button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Swiper.js JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <script>
+    // =============================
+    // Swiper Initialization
+    // =============================
+    var swiper = new Swiper('.beach-slider', { 
+        slidesPerView: 'auto', 
+        spaceBetween: 15,      
+        centeredSlides: true,  
+        loop: true,            
+        grabCursor: true,      
+        autoplay: {
+            delay: 4500,       
+            disableOnInteraction: false, 
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
     // =============================
     // Manejo del formulario de alerta con fetch
     // =============================
     document.getElementById('alertForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita el envío tradicional del formulario
+        e.preventDefault(); 
 
-        const formData = new FormData(this); // Capturamos datos del formulario
+        const formData = new FormData(this);
+        const anonymousCheckbox = document.getElementById('anonymous');
+
+        if (anonymousCheckbox.checked) {
+            formData.set('nombre', 'Anónimo'); 
+            formData.set('contacto', 'No proporcionado');
+        }
+
 
         fetch('/report', {
             method: 'POST',
             body: formData
         })
         .then(response => {
-            if (response.redirected || response.ok) {
-                // Mostrar modal de éxito
+            if (response.redirected || response.ok) { 
                 document.getElementById('successModal').classList.remove('hidden');
-                // Reset del formulario
                 document.getElementById('alertForm').reset();
-                // Recargar alertas dinámicamente
-                cargarAlertas();
+                cargarAlertas(); 
             } else {
-                throw new Error("El servidor no pudo procesar el reporte.");
+                 response.text().then(text => { throw new Error("El servidor no pudo procesar el reporte: " + text + " (Status: " + response.status + ")") });
             }
         })
         .catch(error => {
             console.error("Error al enviar el formulario:", error);
-            alert("Hubo un error al enviar el reporte. Intente nuevamente.");
+            alert("Hubo un error al enviar el reporte. Intente nuevamente.\nDetalles: " + error.message);
         });
     });
 
     // =============================
-    // Cierre del modal
+    // Cierre de Modales
     // =============================
-    function closeModal() {
-        document.getElementById('successModal').classList.add('hidden');
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
     }
 
     // =============================
-    // Simulación de estado dinámico (demo)
+    // Abrir y poblar Modal de Detalles de Playa
     // =============================
-    setInterval(function() {
-        const statusIndicators = document.querySelectorAll('.status-indicator');
-        statusIndicators.forEach(indicator => {
-            if (Math.random() < 0.1) {
-                indicator.classList.remove('status-safe', 'status-warning', 'status-danger');
-                const statuses = ['status-safe', 'status-warning', 'status-danger'];
-                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-                indicator.classList.add(randomStatus);
+    const beachDetailModal = document.getElementById('beachDetailModal');
+    const modalBeachName = document.getElementById('modalBeachName');
+    const modalBeachImage = document.getElementById('modalBeachImage');
+    const modalBeachStatusIndicator = document.getElementById('modalBeachStatusIndicator');
+    const modalBeachStatusText = document.getElementById('modalBeachStatusText');
+    const modalBeachOpenStatusBadge = document.getElementById('modalBeachOpenStatusBadge');
+    const modalBeachDetailsText = document.getElementById('modalBeachDetailsText');
 
-                const statusText = indicator.nextElementSibling;
-                if (randomStatus === 'status-safe') {
-                    statusText.textContent = 'Condición: Segura';
-                } else if (randomStatus === 'status-warning') {
-                    statusText.textContent = 'Condición: Precaución';
-                } else {
-                    statusText.textContent = 'Condición: Peligro';
-                }
-            }
+    document.querySelectorAll('.open-beach-modal-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            modalBeachName.textContent = this.dataset.beachName;
+            modalBeachImage.src = this.dataset.beachImage;
+            modalBeachImage.alt = `Imagen de ${this.dataset.beachName}`;
+            
+            modalBeachStatusIndicator.className = 'status-indicator'; 
+            modalBeachStatusIndicator.classList.add(this.dataset.beachStatusClass);
+            modalBeachStatusText.textContent = this.dataset.beachStatus;
+            
+            modalBeachOpenStatusBadge.textContent = this.dataset.beachOpenStatus;
+            modalBeachOpenStatusBadge.className = 'text-xs px-2 py-1 rounded ml-2'; 
+            modalBeachOpenStatusBadge.classList.add(this.dataset.beachOpenStatusBg, this.dataset.beachOpenStatusText);
+            
+            modalBeachDetailsText.innerHTML = this.dataset.beachDetails.split('<br>').map(detail => `<p>${detail}</p>`).join('');
+
+            beachDetailModal.classList.remove('hidden');
         });
-    }, 5000);
+    });
+
 
     // =============================
     // Render dinámico de alertas desde /listar_informes
     // =============================
     const tipoEstilos = {
-        "Contaminación": {
-            border: "border-yellow-500",
-            bg: "bg-yellow-50",
-            text: "text-yellow-800"
-        },
-        "Emergencia": {
-            border: "border-red-500",
-            bg: "bg-red-50",
-            text: "text-red-800"
-        },
-        "Advertencia": {
-            border: "border-blue-500",
-            bg: "bg-blue-50",
-            text: "text-blue-800"
-        }
+        "Contaminación": { border: "border-yellow-500", bg: "bg-yellow-50", text: "text-yellow-800", icon: "fas fa-smog" },
+        "Emergencia": { border: "border-red-500", bg: "bg-red-50", text: "text-red-800", icon: "fas fa-first-aid" },
+        "Incidente": { border: "border-blue-500", bg: "bg-blue-50", text: "text-blue-800", icon: "fas fa-shield-alt" },
+        "Infraestructura": { border: "border-purple-500", bg: "bg-purple-50", text: "text-purple-800", icon: "fas fa-tools" },
+        "Otro": { border: "border-gray-500", bg: "bg-gray-50", text: "text-gray-800", icon: "fas fa-info-circle" }
     };
 
     function formatearLugar(lugar) {
+        if (!lugar) return 'Lugar no especificado';
         return lugar
-            .replace(/_/g, ' ')
-            .replace(/\b\w/g, l => l.toUpperCase());
+            .replace(/_/g, ' ') 
+            .replace(/\b\w/g, l => l.toUpperCase()); 
     }
 
     function cargarAlertas() {
         fetch('/listar_informes')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar alertas: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 const container = document.getElementById('alertas-container');
-                container.innerHTML = ''; // Limpiar contenido anterior
+                container.innerHTML = ''; 
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-center">No hay alertas recientes.</p>';
+                    return;
+                }
+                
+                try {
+                    data.sort((a, b) => {
+                        const dateA = new Date(a.fecha_creacion);
+                        const dateB = new Date(b.fecha_creacion);
+                        return dateB - dateA; 
+                    });
+                } catch (e) {
+                    console.warn("No se pudo ordenar las alertas por fecha, mostrando como vienen del servidor.", e);
+                }
+
 
                 data.forEach(reporte => {
-                    const estilos = tipoEstilos[reporte.tipo] || tipoEstilos["Advertencia"];
+                    const estilos = tipoEstilos[reporte.tipo] || tipoEstilos["Otro"];
                     const div = document.createElement('div');
-                    div.className = `border-l-4 ${estilos.border} ${estilos.bg} p-4 rounded-r`;
+                    div.className = `border-l-4 ${estilos.border} ${estilos.bg} p-4 rounded-r shadow-sm mb-3`; 
+
+                    const esAnonimo = !reporte.nombre || reporte.nombre.toLowerCase() === 'anónimo' || reporte.nombre.toLowerCase() === 'no proporcionado';
+                    const nombreReportante = esAnonimo ? 'de forma anónima' : `por ${reporte.nombre}`;
 
                     div.innerHTML = `
-                        <div class="flex justify-between">
-                            <h3 class="font-semibold ${estilos.text}">${reporte.tipo} en ${formatearLugar(reporte.lugar)}</h3>
-                            <span class="text-xs text-gray-500">${reporte.fecha_creacion}</span>
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-semibold ${estilos.text} text-lg flex items-center"><i class="${estilos.icon} mr-2"></i>${reporte.tipo} en ${formatearLugar(reporte.lugar)}</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap ml-2">${reporte.fecha_creacion}</span>
                         </div>
-                        <p class="text-sm text-gray-700 mt-1">${reporte.descripcion}</p>
-                        <div class="mt-2 flex items-center text-xs text-gray-500">
-                            <i class="fas fa-map-marker-alt mr-1"></i> ${formatearLugar(reporte.lugar)}
+                        <p class="text-sm text-gray-700 mt-1 mb-2">${reporte.descripcion}</p>
+                        <div class="mt-1 text-xs text-gray-500">
+                            Reportado ${nombreReportante}
                         </div>
                     `;
-
                     container.appendChild(div);
                 });
             })
             .catch(error => {
                 console.error("Error cargando alertas:", error);
+                const container = document.getElementById('alertas-container');
+                container.innerHTML = `<p class="text-red-500 text-center">Error al cargar las alertas: ${error.message}. Intente más tarde.</p>`;
             });
     }
 
-    // Ejecutar carga inicial de alertas
     document.addEventListener('DOMContentLoaded', cargarAlertas);
+
 </script>
-
-
 </body>
 </html>
