@@ -1,12 +1,13 @@
 import os
+import json
 from db import *
 from models import Reporte
 from sqlmodel import select
 from datetime import datetime
 from dotenv import load_dotenv
-from utils import enviar_correo
+from utils.utils import enviar_correo
+from fastapi import APIRouter,Form
 from fastapi.responses import RedirectResponse
-from fastapi import APIRouter,Depends,Form,Request
 
 load_dotenv()
 
@@ -58,3 +59,11 @@ async def listar_reportes(session:sesion):
         reportes_formateados.append(reporte_dict)
     
     return reportes_formateados
+
+@router.get("/update_weather")
+async def update_weather():
+    """ Lee los datos climaticos almacenados en el json"""
+    with open("Clima_playas.json","r",encoding="utf-8") as file:
+        data = json.load(file)
+        
+    return data
