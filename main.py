@@ -16,8 +16,8 @@ crons = Crons(app)
 # Añadimos el router de crons a la aplicación
 app.include_router(get_cron_router(), prefix="/api",tags=["Tareas"])
 
-# Creamos una tarea programada que se ejecutarla en las horas definidas
-@crons.cron("0 6,12,20 * * *", name="Update Popularidad")
+# Creamos una tarea programada que se ejecutarla cada 3 horas
+@crons.cron("0 */3 * * *", name="Update Popularidad")
 async def check_popularidad():
     print("⚡ Actualizando el clima de las playas...")
     try:
