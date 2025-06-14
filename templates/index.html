@@ -88,10 +88,9 @@
         }
         #alertas-container::-webkit-scrollbar-thumb:hover {
             background: #a3a3a3; /* Color del pulgar al pasar el mouse */
-        }
-
-        .swiper-wrapper {
+        }        .swiper-wrapper {
             /* Swiper maneja esto internamente */
+            position: relative;
         }
 
         .swiper-slide {
@@ -178,10 +177,32 @@
             opacity: 0.8;
             width: 10px;
             height: 10px;
-        }
-        .swiper-pagination-bullet-active {
+        }        .swiper-pagination-bullet-active {
             background-color: var(--swiper-pagination-color); 
             opacity: 1;
+        }
+
+        /* Estilos para los elementos del clima */
+        .weather-icon {
+            transition: opacity 0.3s ease;
+        }
+
+        .weather-description {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .day-night {
+            font-weight: 600;
+        }
+
+        #updateWeatherBtn {
+            font-size: 0.875rem;
+        }
+
+        #updateWeatherBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -199,10 +220,16 @@
         </div>
     </header>
 
-<main class="container mx-auto px-4 py-8">
-    <!-- Beach Status Overview with Swiper -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Estado de las Playas</h2>
+<main class="container mx-auto px-4 py-8">    <!-- Beach Status Overview with Swiper -->
+    <section class="mb-12">        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 border-b pb-2">Estado de las Playas</h2>
+            <div class="flex items-center">
+                <span id="weatherStatus" class="text-sm text-gray-600 mr-3"></span>
+                <button id="updateWeatherBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+                    <i class="fas fa-sync-alt mr-2"></i>Actualizar Clima
+                </button>
+            </div>
+        </div>
         <div class="swiper-container beach-slider"> 
             <div class="swiper-wrapper">
                 <!-- Slide 1: Bocagrande -->
@@ -219,12 +246,18 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="bocagrande">Temp: 30°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="bocagrande">Viento: 12 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="bocagrande">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="bocagrande">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
-                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Moderado</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 30°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 12 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="bocagrande" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="bocagrande">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="bocagrande">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Bocagrande"
@@ -255,12 +288,18 @@
                                     <span class="status-indicator status-warning"></span> Condición: Precaución
                                 </span>
                                 <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="playa_blanca_baru">Temp: 32°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="playa_blanca_baru">Viento: 18 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="playa_blanca_baru">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="playa_blanca_baru">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Alta</span></div>
-                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Fuerte</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 32°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 18 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="playa_blanca_baru" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="playa_blanca_baru">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="playa_blanca_baru">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Playa Blanca (Isla Barú)"
@@ -280,7 +319,7 @@
                 <!-- Slide 3: La Boquilla -->
                 <div class="swiper-slide">
                      <div class="beach-card bg-white rounded-lg shadow-md overflow-hidden">
-                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://lh5.googleusercontent.com/zvvS8bMoBvqePbNVTdYzVxaboF1asoxCtXR0fT-34KOk0KYooGvRfnSBBqd_r4xvmOt2yiTtvyi8liYfVDsXvKE=w16383');">
+                        <div class="h-40 bg-cover bg-center" style="background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/9e/47/cb/sunset-in-cartagena-de.jpg?w=1200&h=-1&s=1');">
                             <div class="bg-black bg-opacity-40 h-full flex items-end p-4">
                                 <h3 class="text-white text-xl font-bold">La Boquilla</h3>
                             </div>
@@ -291,16 +330,22 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="la_boquilla">Temp: 29°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="la_boquilla">Viento: 8 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="la_boquilla">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="la_boquilla">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Baja</span></div>
-                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Suave</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 29°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 8 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="la_boquilla" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="la_boquilla">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="la_boquilla">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="La Boquilla"
-                                data-beach-image="https://lh5.googleusercontent.com/zvvS8bMoBvqePbNVTdYzVxaboF1asoxCtXR0fT-34KOk0KYooGvRfnSBBqd_r4xvmOt2yiTtvyi8liYfVDsXvKE=w16383"
+                                data-beach-image="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/9e/47/cb/sunset-in-cartagena-de.jpg?w=1200&h=-1&s=1"
                                 data-beach-status="Segura"
                                 data-beach-status-class="status-safe"
                                 data-beach-open-status="Abierta"
@@ -327,12 +372,18 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="marbella">Temp: 30°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="marbella">Viento: 10 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="marbella">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="marbella">Nubes: --</span></div>
                             </div>
-                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
-                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Moderado</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 30°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 10 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="marbella" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="marbella">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="marbella">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Marbella"
@@ -363,12 +414,18 @@
                                     <span class="status-indicator status-warning"></span> Condición: Precaución
                                 </span>
                                 <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Restringida</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="cholon_baru">Temp: --</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="cholon_baru">Viento: 15 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="cholon_baru">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="cholon_baru">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Alta</span></div>
-                                <div><i class="fas fa-ship text-purple-500 mr-1"></i><span class="text-gray-600">Botes: Muchos</span></div>
-                                <div><i class="fas fa-music text-pink-500 mr-1"></i><span class="text-gray-600">Fiesta: Común</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 15 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="cholon_baru" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="cholon_baru">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="cholon_baru">--</span>
                             </div>
                            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Cholón (Barú)"
@@ -399,12 +456,18 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="manzanillo_del_mar">Temp: 28°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="manzanillo_del_mar">Viento: 7 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="manzanillo_del_mar">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="manzanillo_del_mar">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Baja</span></div>
-                                <div><i class="fas fa-umbrella-beach text-yellow-500 mr-1"></i><span class="text-gray-600">Oleaje: Suave</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 28°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 7 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="manzanillo_del_mar" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="manzanillo_del_mar">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="manzanillo_del_mar">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Manzanillo del Mar"
@@ -435,12 +498,18 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Bandera Azul</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="playa_azul">Temp: --</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="playa_azul">Viento: 9 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="playa_azul">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="playa_azul">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
-                                <div><i class="fas fa-swimmer text-cyan-500 mr-1"></i><span class="text-gray-600">Agua: Clara</span></div>
-                                <div><i class="fas fa-award text-blue-700 mr-1"></i><span class="text-gray-600">Calidad: Alta</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 9 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="playa_azul" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="playa_azul">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="playa_azul">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Playa Azul"
@@ -471,12 +540,18 @@
                                     <span class="status-indicator status-danger"></span> Condición: Peligro
                                 </span>
                                 <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Cerrada Temporal</span>
+                            </div>                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="laguito">Temp: 31°C</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="laguito">Viento: 13 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="laguito">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="laguito">Nubes: --</span></div>
                             </div>
-                             <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: N/A</span></div>
-                                <div><i class="fas fa-exclamation-triangle text-red-500 mr-1"></i><span class="text-gray-600">Alerta: Erosión</span></div>
-                                <div><i class="fas fa-temperature-high text-red-500 mr-1"></i><span class="text-gray-600">Temp: 31°C</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 13 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="laguito" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="laguito">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="laguito">--</span>
                             </div>
                             <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Laguito"
@@ -507,12 +582,18 @@
                                     <span class="status-indicator status-safe"></span> Condición: Segura
                                 </span>
                                 <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Abierta</span>
+                            </div>                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
+                                <div><i class="fas fa-thermometer-half text-red-500 mr-1"></i><span class="text-gray-600 temperature" data-beach="castillogrande">Temp: --</span></div>
+                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600 wind" data-beach="castillogrande">Viento: 10 km/h</span></div>
+                                <div><i class="fas fa-tint text-blue-500 mr-1"></i><span class="text-gray-600 humidity" data-beach="castillogrande">Humedad: --</span></div>
+                                <div><i class="fas fa-cloud text-gray-400 mr-1"></i><span class="text-gray-600 clouds" data-beach="castillogrande">Nubes: --</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm text-left">
-                                <div><i class="fas fa-users text-blue-500 mr-1"></i><span class="text-gray-600">Afluencia: Media</span></div>
-                                <div><i class="fas fa-water text-teal-500 mr-1"></i><span class="text-gray-600">Agua: Calma</span></div>
-                                <div><i class="fas fa-walking text-green-500 mr-1"></i><span class="text-gray-600">Ideal para: Caminar</span></div>
-                                <div><i class="fas fa-wind text-gray-500 mr-1"></i><span class="text-gray-600">Viento: 10 km/h</span></div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="weather-icon w-8 h-8 mr-2" data-beach="castillogrande" src="" alt="Clima" style="display: none;">
+                                    <span class="text-xs text-gray-600 weather-description" data-beach="castillogrande">--</span>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night" data-beach="castillogrande">--</span>
                             </div>
                              <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-colors open-beach-modal-btn"
                                 data-beach-name="Castillogrande"
@@ -681,7 +762,7 @@
             <span id="modalBeachOpenStatusBadge" class="text-xs px-2 py-1 rounded ml-2"></span>
         </div>
 
-        <h4 class="text-md font-semibold text-gray-700 mb-1">Información Adicional:</h4>
+        <h4 class="text-md font-semibold text-gray-700 mb-1">Información de la Playa:</h4>
         <div id="modalBeachDetailsText" class="text-sm text-gray-600 space-y-1">
             <!-- Detalles se insertarán aquí -->
         </div>
@@ -771,9 +852,7 @@
     const modalBeachStatusIndicator = document.getElementById('modalBeachStatusIndicator');
     const modalBeachStatusText = document.getElementById('modalBeachStatusText');
     const modalBeachOpenStatusBadge = document.getElementById('modalBeachOpenStatusBadge');
-    const modalBeachDetailsText = document.getElementById('modalBeachDetailsText');
-
-    document.querySelectorAll('.open-beach-modal-btn').forEach(button => {
+    const modalBeachDetailsText = document.getElementById('modalBeachDetailsText');    document.querySelectorAll('.open-beach-modal-btn').forEach(button => {
         button.addEventListener('click', function() {
             modalBeachName.textContent = this.dataset.beachName;
             modalBeachImage.src = this.dataset.beachImage;
@@ -785,13 +864,72 @@
             
             modalBeachOpenStatusBadge.textContent = this.dataset.beachOpenStatus;
             modalBeachOpenStatusBadge.className = 'text-xs px-2 py-1 rounded ml-2'; 
-            modalBeachOpenStatusBadge.classList.add(this.dataset.beachOpenStatusBg, this.dataset.beachOpenStatusText);
+            modalBeachOpenStatusBadge.classList.add(this.dataset.beachOpenStatusBg, this.dataset.beachOpenStatusText);            // Obtener datos climáticos actualizados para esta playa
+            const beachKey = getBeachKeyFromButton(this);
             
-            modalBeachDetailsText.innerHTML = this.dataset.beachDetails.split('<br>').map(detail => `<p>${detail}</p>`).join('');
+            // Información descriptiva de cada playa
+            const beachInfo = getBeachInfo(beachKey);
+            let detailsText = beachInfo;
+            
+            if (beachKey && window.currentWeatherData) {
+                const weatherData = window.currentWeatherData.find(p => p.Playa === beachKey);
+                if (weatherData) {
+                    detailsText += `<br><br><strong>Datos Climáticos Actuales:</strong><br>`;
+                    detailsText += `Temperatura: ${weatherData.Temperatura}°C<br>`;
+                    detailsText += `Viento: ${weatherData.Viento} km/h<br>`;
+                    detailsText += `Humedad: ${weatherData.Humedad}%<br>`;
+                    detailsText += `Nubes: ${weatherData.Nubes}%<br>`;
+                    detailsText += `Condición: ${weatherData.Clima}`;
+                } else {
+                    detailsText += '<br><br><strong>Datos Climáticos:</strong><br>Actualizando datos...';
+                }
+            } else {
+                detailsText += '<br><br><strong>Datos Climáticos:</strong><br>Cargando información...';
+            }
+            
+            modalBeachDetailsText.innerHTML = detailsText.split('<br>').map(detail => `<p>${detail}</p>`).join('');
 
             beachDetailModal.classList.remove('hidden');
         });
-    });
+    });    // Función auxiliar para obtener la clave de playa desde el botón
+    function getBeachKeyFromButton(button) {
+        const beachName = button.dataset.beachName.toLowerCase();
+        if (beachName.includes('bocagrande')) return 'bocagrande';
+        if (beachName.includes('playa blanca')) return 'playa_blanca_baru';
+        if (beachName.includes('boquilla')) return 'la_boquilla';
+        if (beachName.includes('marbella')) return 'marbella';
+        if (beachName.includes('cholón')) return 'cholon_baru';
+        if (beachName.includes('manzanillo')) return 'manzanillo_del_mar';
+        if (beachName.includes('playa azul')) return 'playa_azul';
+        if (beachName.includes('laguito')) return 'laguito';
+        if (beachName.includes('castillogrande')) return 'castillogrande';
+        return null;
+    }
+
+    // Función para obtener información descriptiva de cada playa
+    function getBeachInfo(beachKey) {
+        const beachDescriptions = {
+            'bocagrande': '<strong>Sobre esta playa:</strong><br>Playa urbana ubicada en el corazón turístico de Cartagena. Arena dorada, aguas cálidas del Caribe y fácil acceso a hoteles, restaurantes y vida nocturna. Ideal para turistas que buscan comodidad y servicios completos.',
+            
+            'playa_blanca_baru': '<strong>Sobre esta playa:</strong><br>Considerada una de las más hermosas del Caribe colombiano. Arena blanca y fina, aguas cristalinas de color turquesa. Ubicada en Isla Barú, es perfecta para relajarse y disfrutar de la naturaleza. Acceso por lancha o vía terrestre.',
+            
+            'la_boquilla': '<strong>Sobre esta playa:</strong><br>Playa tradicional de pescadores al norte de Cartagena. Ambiente auténtico y tranquilo, ideal para conocer la cultura local. Famosa por sus manglares y la pesca artesanal. Perfecta para familias y actividades ecológicas.',
+            
+            'marbella': '<strong>Sobre esta playa:</strong><br>Playa residencial ubicada al sur de Bocagrande. Ambiente más relajado que su vecina, con aguas tranquilas y arena dorada. Popular entre locales y visitantes que buscan un ambiente menos comercial pero con buena infraestructura.',
+            
+            'cholon_baru': '<strong>Sobre esta playa:</strong><br>Famosa zona de fiestas en el mar cerca de Barú. Conocida por sus "chivas" (fiestas en bote) y ambiente festivo. Aguas cristalinas y poco profundas, ideal para quien busca diversión y música. Muy popular los fines de semana.',
+            
+            'manzanillo_del_mar': '<strong>Sobre esta playa:</strong><br>Playa extensa y tranquila al sur de Cartagena. Arena dorada y aguas cálidas, con menos aglomeraciones. Ideal para largas caminatas, deportes de playa y relajación. Ofrece hermosas vistas y atardeceres espectaculares.',
+            
+            'playa_azul': '<strong>Sobre esta playa:</strong><br>Playa certificada con Bandera Azul por su excelente calidad ambiental. Aguas limpias y cristalinas, arena fina y servicios de alta calidad. Manejo sostenible y responsable del ecosistema marino. Ideal para familias conscientes del ambiente.',
+            
+            'laguito': '<strong>Sobre esta playa:</strong><br>Pequeña bahía protegida en el sector histórico de Cartagena. Aguas muy tranquilas y poco profundas, ideal para niños y personas que buscan un baño relajante. Vista privilegiada de la ciudad amurallada y sus fortificaciones.',
+            
+            'castillogrande': '<strong>Sobre esta playa:</strong><br>Playa residencial exclusiva con vista a la bahía de Cartagena. Aguas calmadas y protegidas, ideal para deportes náuticos suaves como kayak y paddleboard. Ambiente elegante y tranquilo, popular entre residentes locales.'
+        };
+        
+        return beachDescriptions[beachKey] || '<strong>Sobre esta playa:</strong><br>Hermosa playa del Caribe colombiano con aguas cálidas y arena tropical.';
+    }
 
 
     // =============================
@@ -868,7 +1006,148 @@
             });
     }
 
-    document.addEventListener('DOMContentLoaded', cargarAlertas);
+    document.addEventListener('DOMContentLoaded', cargarAlertas);    // =============================
+    // Carga y actualización de datos climáticos
+    // =============================
+    
+    // Variable global para almacenar los datos climáticos actuales
+    window.currentWeatherData = null;
+    
+    // Mapeo de nombres de playas del JSON a los data-beach del HTML
+    const beachMapping = {
+        'bocagrande': 'bocagrande',
+        'playa_blanca_baru': 'playa_blanca_baru',
+        'la_boquilla': 'la_boquilla',
+        'marbella': 'marbella',
+        'cholon_baru': 'cholon_baru',
+        'manzanillo_del_mar': 'manzanillo_del_mar',
+        'playa_azul': 'playa_azul',
+        'laguito': 'laguito',
+        'castillogrande': 'castillogrande'
+    };    function cargarDatosClimaticos() {
+        const updateBtn = document.getElementById('updateWeatherBtn');
+        const weatherStatus = document.getElementById('weatherStatus');
+        const icon = updateBtn.querySelector('i');
+        
+        // Agregar animación de carga
+        icon.classList.remove('fa-sync-alt');
+        icon.classList.add('fa-spinner', 'fa-spin');
+        updateBtn.disabled = true;
+        weatherStatus.textContent = 'Actualizando datos...';
+        weatherStatus.className = 'text-sm text-blue-600 mr-3';
+
+        fetch('/update_weather')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar datos climáticos: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })            .then(data => {
+                console.log('Datos climáticos cargados:', data);
+                
+                // Almacenar datos climáticos globalmente
+                window.currentWeatherData = data;
+                
+                // Actualizar cada playa con sus datos climáticos
+                let playasActualizadas = 0;
+                data.forEach(playa => {
+                    const beachKey = beachMapping[playa.Playa];
+                    if (beachKey) {
+                        actualizarDatosPlaya(beachKey, playa);
+                        playasActualizadas++;
+                    }
+                });
+                
+                console.log('Datos climáticos actualizados exitosamente');
+                
+                // Mostrar mensaje de éxito
+                weatherStatus.textContent = `✓ ${playasActualizadas} playas actualizadas`;
+                weatherStatus.className = 'text-sm text-green-600 mr-3';
+                
+                // Limpiar mensaje después de 3 segundos
+                setTimeout(() => {
+                    weatherStatus.textContent = '';
+                }, 3000);
+            })
+            .catch(error => {
+                console.error("Error cargando datos climáticos:", error);
+                weatherStatus.textContent = '⚠ Error al actualizar';
+                weatherStatus.className = 'text-sm text-red-600 mr-3';
+                
+                // Limpiar mensaje después de 5 segundos
+                setTimeout(() => {
+                    weatherStatus.textContent = '';
+                }, 5000);
+            })
+            .finally(() => {
+                // Restaurar botón
+                icon.classList.remove('fa-spinner', 'fa-spin');
+                icon.classList.add('fa-sync-alt');
+                updateBtn.disabled = false;
+            });
+    }
+
+    function actualizarDatosPlaya(beachKey, datos) {
+        // Actualizar temperatura
+        const tempElement = document.querySelector(`.temperature[data-beach="${beachKey}"]`);
+        if (tempElement) {
+            tempElement.textContent = `Temp: ${datos.Temperatura}°C`;
+        }
+
+        // Actualizar viento
+        const windElement = document.querySelector(`.wind[data-beach="${beachKey}"]`);
+        if (windElement) {
+            windElement.textContent = `Viento: ${datos.Viento} km/h`;
+        }
+
+        // Actualizar humedad
+        const humidityElement = document.querySelector(`.humidity[data-beach="${beachKey}"]`);
+        if (humidityElement) {
+            humidityElement.textContent = `Humedad: ${datos.Humedad}%`;
+        }
+
+        // Actualizar nubes
+        const cloudsElement = document.querySelector(`.clouds[data-beach="${beachKey}"]`);
+        if (cloudsElement) {
+            cloudsElement.textContent = `Nubes: ${datos.Nubes}%`;
+        }
+
+        // Actualizar icono del clima
+        const iconElement = document.querySelector(`.weather-icon[data-beach="${beachKey}"]`);
+        if (iconElement && datos.Icono_clima) {
+            iconElement.src = `https:${datos.Icono_clima}`;
+            iconElement.style.display = 'block';
+        }
+
+        // Actualizar descripción del clima
+        const descElement = document.querySelector(`.weather-description[data-beach="${beachKey}"]`);
+        if (descElement) {
+            descElement.textContent = datos.Clima;
+        }
+
+        // Actualizar indicador día/noche
+        const dayNightElement = document.querySelector(`.day-night[data-beach="${beachKey}"]`);
+        if (dayNightElement) {
+            if (datos.Es_dia === 1) {
+                dayNightElement.textContent = 'Día';
+                dayNightElement.className = 'text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded day-night';
+            } else {
+                dayNightElement.textContent = 'Noche';
+                dayNightElement.className = 'text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded day-night';
+            }
+            dayNightElement.setAttribute('data-beach', beachKey);
+        }
+    }
+
+    // Event listener para el botón de actualización
+    document.getElementById('updateWeatherBtn').addEventListener('click', cargarDatosClimaticos);    // Cargar datos climáticos al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarAlertas();
+        // Pequeño delay para que la página se cargue completamente
+        setTimeout(() => {
+            cargarDatosClimaticos();
+        }, 500);
+    });
 
 </script>
 </body>

@@ -14,10 +14,10 @@ app = FastAPI(
 crons = Crons(app)
 
 # Añadimos el router de crons a la aplicación
-app.include_router(get_cron_router(), prefix="/api")
+app.include_router(get_cron_router(), prefix="/api",tags=["Tareas"])
 
 # Creamos una tarea programada que se ejecutarla en las horas definidas
-@crons.cron("*/1 * * * *", name="Update Popularidad")
+@crons.cron("0 6,12,20 * * *", name="Update Popularidad")
 async def check_popularidad():
     print("⚡ Actualizando el clima de las playas...")
     try:
