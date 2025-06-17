@@ -1,5 +1,5 @@
+from db import startup
 from fastapi import FastAPI
-from db import create_tables
 from router import reporte,render
 from utils.clima import update_weather
 from fastapi.staticfiles import StaticFiles
@@ -8,7 +8,7 @@ from fastapi_crons import Crons,get_cron_router
 
 app = FastAPI(
     title="Reporte de playas",
-    lifespan=create_tables,
+    lifespan=startup,
     docs_url=None, redoc_url=None
 )
 crons = Crons(app)

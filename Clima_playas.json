@@ -1,92 +1,92 @@
 [
     {
         "Playa": "bocagrande",
-        "Temperatura": 25.2,
-        "Viento": 16.9,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 85
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "playa_blanca_baru",
-        "Temperatura": 23.8,
-        "Viento": 7.9,
-        "Es_dia": 0,
-        "Clima": "Mist",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/143.png",
-        "Humedad": 95,
-        "Nubes": 74
+        "Temperatura": 29.2,
+        "Viento": 13.0,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "la_boquilla",
         "Temperatura": 29.2,
-        "Viento": 15.8,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 81
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "marbella",
-        "Temperatura": 25.2,
-        "Viento": 15.8,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 81
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "cholon_baru",
-        "Temperatura": 23.8,
-        "Viento": 7.9,
-        "Es_dia": 0,
-        "Clima": "Mist",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/143.png",
-        "Humedad": 95,
-        "Nubes": 74
+        "Temperatura": 29.2,
+        "Viento": 13.0,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "manzanillo_del_mar",
-        "Temperatura": 25.2,
-        "Viento": 15.8,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 81
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "playa_azul",
-        "Temperatura": 25.2,
-        "Viento": 15.8,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 81
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "laguito",
-        "Temperatura": 25.2,
-        "Viento": 16.9,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 85
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     },
     {
         "Playa": "castillogrande",
-        "Temperatura": 25.2,
-        "Viento": 16.9,
-        "Es_dia": 0,
-        "Clima": "Patchy rain nearby",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-        "Humedad": 89,
-        "Nubes": 85
+        "Temperatura": 29.2,
+        "Viento": 13.7,
+        "Es_dia": 1,
+        "Clima": "Partly cloudy",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "Humedad": 84,
+        "Nubes": 50
     }
 ]
