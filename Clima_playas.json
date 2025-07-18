@@ -1,92 +1,92 @@
 [
     {
         "Playa": "bocagrande",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "playa_blanca_baru",
-        "Temperatura": 29.2,
-        "Viento": 13.0,
+        "Temperatura": 32.1,
+        "Viento": 15.1,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "la_boquilla",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "marbella",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "cholon_baru",
-        "Temperatura": 29.2,
-        "Viento": 13.0,
+        "Temperatura": 32.1,
+        "Viento": 15.1,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "manzanillo_del_mar",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "playa_azul",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "laguito",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     },
     {
         "Playa": "castillogrande",
-        "Temperatura": 29.2,
-        "Viento": 13.7,
+        "Temperatura": 32.1,
+        "Viento": 7.9,
         "Es_dia": 1,
-        "Clima": "Partly cloudy",
-        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-        "Humedad": 84,
-        "Nubes": 50
+        "Clima": "Sunny",
+        "Icono_clima": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+        "Humedad": 67,
+        "Nubes": 0
     }
 ]
